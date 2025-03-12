@@ -2,13 +2,16 @@ const dbConnect = require("./config/mongo");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const routes = require("./routes/index");
 
 // Create express instance and configure it
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-//TODO: Define the routes
+// Define the routes
+app.use("/", routes);
+app.use(express.static("storage"));
 
 // Define the port
 const port = process.env.PORT || 5000;
