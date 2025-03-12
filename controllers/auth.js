@@ -2,11 +2,13 @@ const { tokenSign } = require("../utils/handleJWT");
 const { matchedData } = require("express-validator");
 const { encrypt } = require("../utils/handlePassword");
 const { usersModel } = require("../models/index");
+const { createOTP } = require("../utils/handleOTP");
 
 const register = async (req, res) => {
   req = matchedData(req);
   const password = await encrypt(req.password);
-  const body = { ...req, password };
+  const verificationCode = createOTP();
+  const body = { ...req, password, verificationCode };
   const dataUser = await usersModel.create(body);
   dataUser.set("password", undefined, { strict: false });
   const data = {
