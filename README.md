@@ -1,60 +1,75 @@
-# Práctica Intermedia INSO3 PWSR
+Aquí tienes el README con iconos y emojis para hacerlo más visual y atractivo:
 
-Este proyecto es una aplicación backend desarrollada en Node.js/Express para gestionar usuarios. Incluye funcionalidades básicas como registro, validación del email, inicio de sesión, actualización de datos y gestión de imágenes (logo).
+---
 
-## Descripción
+# 🚀 Práctica Intermedia INSO3 PWSR
 
-La aplicación permite a los usuarios:
+Este proyecto es una aplicación backend desarrollada en **Node.js** con **Express** 🛠️ para gestionar usuarios. Permite registro, validación de email, inicio de sesión, actualización de datos y gestión de imágenes de perfil.
 
-- Registrarse (con validación de email y contraseña).
-- Validar su email a través de un código.
-- Iniciar sesión y obtener un token de autenticación.
-- Actualizar sus datos personales o de compañía.
-- Subir un logo (imagen).
+---
 
-## Instalación y Uso
+## 📌 Descripción
 
-1. **Clona el repositorio:**
+La API permite:  
+✅ **Registro de usuarios** con validaciones.  
+✅ **Validación del email** a través de un código.  
+✅ **Inicio de sesión** con token de autenticación.  
+✅ **Actualización de datos personales** y de la compañía.  
+✅ **Subida de imágenes** para el logo del usuario.
 
-   ```bash
-   git clone https://github.com/Ronambulo/Practica_Intermedia_INSO3_PWSR.git
-   ```
+---
 
-2. **Accede al directorio:**
+## 📥 Instalación y Uso
 
-   ```bash
-   cd Practica_Intermedia_INSO3_PWSR
-   ```
+### 1️⃣ **Clona el repositorio**
 
-3. **Crea tu propio archivo `.env`**  
-   Asegúrate de crear un archivo `.env` para definir las variables de entorno necesarias (por ejemplo, configuración de la base de datos, claves secretas, etc.). Este archivo no debe incluirse en el repositorio para mantener la seguridad.
+```bash
+git clone https://github.com/Ronambulo/Practica_Intermedia_INSO3_PWSR.git
+```
 
-4. **Instala las dependencias:**
+### 2️⃣ **Accede al directorio del proyecto**
 
-   ```bash
-   npm install
-   ```
+```bash
+cd Practica_Intermedia_INSO3_PWSR
+```
 
-5. **Inicia la aplicación:**
+### 3️⃣ **Crea tu archivo `.env`** ⚠️
 
-   ```bash
-   npm start
-   ```
+Debes crear un archivo `.env` con las variables de entorno necesarias, como la configuración de la base de datos y claves secretas.  
+**Ejemplo (`.env`):**
 
-El servidor se iniciará y estará listo para recibir peticiones.
+```
+TODO
+```
 
-## Endpoints Principales
+🔒 **No compartas este archivo ni lo subas al repositorio.**
 
-- **Registro de Usuario:** Permite crear un nuevo usuario.
-- **Validación de Email:** Confirma el email del usuario mediante un código.
-- **Login:** Permite iniciar sesión y recibir un token.
-- **Onboarding y Actualización:** Permite actualizar datos personales y de la compañía.
-- **Logo:** Permite subir y guardar la imagen de logo.
+### 4️⃣ **Instala las dependencias** 📦
 
-## Autor
+```bash
+npm install
+```
 
-**Enrique Rodriguez del Real**
+### 5️⃣ **Inicia la aplicación** ▶️
 
-## Licencia
+```bash
+npm start
+```
 
-Este proyecto se distribuye bajo la licencia **MIT**.
+El servidor se ejecutará y estará listo para recibir peticiones. 🚀
+
+---
+
+## 👤 Autor
+
+📝 **Enrique Rodriguez del Real**
+
+---
+
+## 📜 Licencia
+
+Este proyecto está bajo la licencia **MIT** 📄.
+
+---
+
+🎉 ¡Listo! Ahora tu README es más visual y atractivo. ¡Espero que te guste! 🚀🔥
