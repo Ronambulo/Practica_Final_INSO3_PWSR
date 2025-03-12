@@ -1,7 +1,3 @@
-Aquí tienes el README con iconos y emojis para hacerlo más visual y atractivo:
-
----
-
 # 🚀 Práctica Intermedia INSO3 PWSR
 
 Este proyecto es una aplicación backend desarrollada en **Node.js** con **Express** 🛠️ para gestionar usuarios. Permite registro, validación de email, inicio de sesión, actualización de datos y gestión de imágenes de perfil.
@@ -69,7 +65,3 @@ El servidor se ejecutará y estará listo para recibir peticiones. 🚀
 ## 📜 Licencia
 
 Este proyecto está bajo la licencia **MIT** 📄.
-
----
-
-🎉 ¡Listo! Ahora tu README es más visual y atractivo. ¡Espero que te guste! 🚀🔥
