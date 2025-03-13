@@ -19,7 +19,6 @@ const tokenVerify = async (token) => {
   try {
     return jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    console.log(err);
     return false;
   }
 };
