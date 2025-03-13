@@ -17,6 +17,9 @@ const tokenSign = (payload) => {
 
 const tokenVerify = async (token) => {
   try {
+    if (token.startsWith("Bearer ")) {
+      token = token.slice(7, token.length).trimLeft();
+    }
     return jwt.verify(token, JWT_SECRET);
   } catch (err) {
     return false;
