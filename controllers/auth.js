@@ -5,6 +5,7 @@ const { usersModel } = require("../models/index");
 const { createOTP } = require("../utils/handleOTP");
 const { handleHttpError } = require("../utils/handleHttpError");
 const { tokenVerify } = require("../utils/handleJWT");
+const sendEmail = require("../utils/handleEmail");
 
 const register = async (req, res) => {
   try {
@@ -12,6 +13,11 @@ const register = async (req, res) => {
     const password = await encrypt(req.password);
     const verificationCode = createOTP();
     const body = { ...req, password, verificationCode };
+    await sendEmail({
+      to: req.email,
+      subject: "Verification code",
+      text: `Your verification code is ${verificationCode}`,
+    });
     const dataUser = await usersModel.create(body);
     dataUser.set("password", undefined, { strict: false });
     dataUser.set("verificationCode", undefined, { strict: false });

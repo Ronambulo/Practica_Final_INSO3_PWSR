@@ -5,6 +5,7 @@ const { matchedData } = require("express-validator");
 const sendItem = async (req, res) => {
   try {
     const info = matchedData(req);
+    console.log(info);
     const data = await sendEmail(info);
     res.send(data);
   } catch (err) {

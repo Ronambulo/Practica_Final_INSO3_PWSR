@@ -2,17 +2,17 @@ POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "enriquerodridel@gmail.com",
     "password": "1234asdf"
 }
 
 ###
 PUT http://localhost:5000/auth/verify
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3ZTc4YTM2Y2U5N2U5YjQ2NDQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQxODU0NTkwLCJleHAiOjE3NDE4OTA1OTB9.HXr7L0pUMEdyGAqGeKiApQONFixEo91GBXOaGmyMrNE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiOTFlMjZjNmZjNjlhZTNjNzEiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg2NjgxLCJleHAiOjE3NDMwMjI2ODF9.5_pHL0FbJxu4EAbHFVJiel6wyxoMPyUMBN8mOMX5exI
 
 {
-    "code": "517741"
+    "code": "917744"
 }
 
 ###
@@ -20,7 +20,7 @@ POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "enriquerodridel@gmail.com",
     "password": "1234asdf"
 }
 
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3Z
 ###
 POST http://localhost:5000/mail
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3ZTc4YTM2Y2U5N2U5YjQ2NDQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyMzgyMDIzLCJleHAiOjE3NDI0MTgwMjN9.yIe26TApMm1NGfUDiKr1exerKNokZwS_QOAJPrzWXGg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGMyOTg0ODA5OWY4MTY4MjRlOTQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg2MzM2LCJleHAiOjE3NDMwMjIzMzZ9.H9fQJ3aK0c7rnSfKvBf7I9eAka7Vn4bNH_6x5oi1I8g
 
 {
     "subject": "Test",
