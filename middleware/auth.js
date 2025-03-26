@@ -1,4 +1,4 @@
-const handleHttpError = require("../utils/handleHttpError");
+const { handleHttpError } = require("../utils/handleHttpError");
 const { tokenVerify } = require("../utils/handleJWT");
 const { usersModel } = require("../models/index");
 

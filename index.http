@@ -34,3 +34,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3Z
     "surnames": "test3Surname",
     "nif": "12345678Z"
 }
+
+###
+POST http://localhost:5000/mail
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3ZTc4YTM2Y2U5N2U5YjQ2NDQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyMzgyMDIzLCJleHAiOjE3NDI0MTgwMjN9.yIe26TApMm1NGfUDiKr1exerKNokZwS_QOAJPrzWXGg
+
+{
+    "subject": "Test",
+    "text": "Test message",
+    "to": "enriquerodridel@gmail.com",
+    "from": "no-reply@rodriguezdelreal.com"
+
+}
