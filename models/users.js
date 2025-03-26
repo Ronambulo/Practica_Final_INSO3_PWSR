@@ -16,6 +16,16 @@ const UserSchema = new mongoose.Schema(
       type: ["admin", "user", "guest"], // Enumerado
       default: "user",
     },
+
+    company: {
+      name: { type: String },
+      cif: { type: String },
+      street: { type: String },
+      number: { type: Number },
+      postal: { type: Number },
+      city: { type: String },
+      province: { type: String },
+    },
   },
   {
     timeStamps: true,

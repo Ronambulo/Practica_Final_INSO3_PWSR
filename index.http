@@ -27,12 +27,29 @@ Content-Type: application/json
 ###
 PATCH http://localhost:5000/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QyOTc3ZTc4YTM2Y2U5N2U5YjQ2NDQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQxODU3NTc2LCJleHAiOjE3NDE4OTM1NzZ9.6VQ0DgbVJMa4sHaVZouuHtKEwe7gDDT6saUMbi7_LA4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiOTFlMjZjNmZjNjlhZTNjNzEiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg4MzI4LCJleHAiOjE3NDMwMjQzMjh9.CNgZKBAk60m7aqnAnZyBOTAJL3P4bbboPdLuCxCmKtk
 
 {
     "name": "test3",
     "surnames": "test3Surname",
     "nif": "12345678Z"
+}
+
+###
+PATCH http://localhost:5000/users/company
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiOTFlMjZjNmZjNjlhZTNjNzEiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg4MzI4LCJleHAiOjE3NDMwMjQzMjh9.CNgZKBAk60m7aqnAnZyBOTAJL3P4bbboPdLuCxCmKtk
+
+{
+  "company": {
+    "name": "Servitop, SL.",
+    "cif": "BXXXXXXXX",
+    "street": "Carlos V",
+    "number": 22,
+    "postal": 28936,
+    "city": "Móstoles",
+    "province": "Madrid"
+  }
 }
 
 ###
