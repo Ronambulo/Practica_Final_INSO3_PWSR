@@ -55,12 +55,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiO
 ###
 POST http://localhost:5000/mail
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGMyOTg0ODA5OWY4MTY4MjRlOTQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg2MzM2LCJleHAiOjE3NDMwMjIzMzZ9.H9fQJ3aK0c7rnSfKvBf7I9eAka7Vn4bNH_6x5oi1I8g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiOTFlMjZjNmZjNjlhZTNjNzEiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQzMTYwNTk3LCJleHAiOjE3NDMxOTY1OTd9.Lh9sg7R4fL4urYMKewo1uRDRtc-xirFLRCiElFHrcS0
 
 {
     "subject": "Test",
     "text": "Test message",
-    "to": "enriquerodridel@gmail.com",
-    "from": "no-reply@rodriguezdelreal.com"
-
+    "to": "enriquerodridel@gmail.com"
 }
+
+###
+PATCH http://localhost:5000/users/logo HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGMyOTg0ODA5OWY4MTY4MjRlOTQiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQyOTg2MzM2LCJleHAiOjE3NDMwMjIzMzZ9.H9fQJ3aK0c7rnSfKvBf7I9eAka7Vn4bNH_6x5oi1I8g
+
+--boundary123
+Content-Disposition: form-data; name="image"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test.jpg
+--boundary123--
