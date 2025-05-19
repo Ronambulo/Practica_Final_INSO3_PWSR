@@ -13,6 +13,7 @@ const {
   hardDeleteUser,
   restoreUser,
   changePassword,
+  inviteUser,
 } = require("../controllers/users");
 const { uploadMiddleware } = require("../utils/handleStorage");
 
@@ -304,5 +305,43 @@ router.post("/recover", requestPasswordReset);
  *         description: Usuario no encontrado
  */
 router.post("/reset-password", resetPassword);
+
+/**
+ * @swagger
+ * /users/invite:
+ *   post:
+ *     summary: Invita a un usuario a la compañía del usuario autenticado
+ *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - name
+ *               - surnames
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: nuevo_usuario@email.com
+ *               name:
+ *                 type: string
+ *                 example: NombreNuevo
+ *               surnames:
+ *                 type: string
+ *                 example: ApellidoNuevo
+ *     responses:
+ *       201:
+ *         description: Invitación enviada correctamente
+ *       409:
+ *         description: El usuario ya existe
+ *       401:
+ *         description: No autorizado
+ */
+router.post("/invite", authMiddleware, inviteUser);
 
 module.exports = router;

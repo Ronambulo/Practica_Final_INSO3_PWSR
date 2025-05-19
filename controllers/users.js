@@ -5,6 +5,7 @@ const { tokenVerify } = require("../utils/handleJWT");
 const { storageModel } = require("../models/index");
 const uploadToPinata = require("../utils/handleUploadIPFS");
 const { compare, encrypt } = require("../utils/handlePassword");
+const sendEmail = require("../utils/handleEmail"); // Usa tu helper
 
 const updateItem = async (req, res) => {
   try {
@@ -90,7 +91,7 @@ const changePassword = async (req, res) => {
 const softDeleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    await UsersModel.delete({ _id: userId });
+    await usersModel.delete({ _id: userId });
     res.json({ message: "USER_SOFT_DELETED" });
   } catch (err) {
     console.error(err);
@@ -102,7 +103,7 @@ const softDeleteUser = async (req, res) => {
 const hardDeleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    await UsersModel.deleteOne({ _id: userId });
+    await usersModel.deleteOne({ _id: userId });
     res.json({ message: "USER_HARD_DELETED" });
   } catch (err) {
     console.error(err);
@@ -114,11 +115,44 @@ const hardDeleteUser = async (req, res) => {
 const restoreUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    await UsersModel.restore({ _id: userId });
+    await usersModel.restore({ _id: userId });
     res.json({ message: "USER_RESTORED" });
   } catch (err) {
     console.error(err);
     handleHttpError(res, "ERROR_RESTORING_USER");
+  }
+};
+
+const inviteUser = async (req, res) => {
+  try {
+    const { email, name, surnames } = req.body;
+    const inviter = req.user;
+
+    // Comprueba si ya existe usuario con ese email
+    const existing = await usersModel.findOne({ email });
+    if (existing) return handleHttpError(res, "USER_ALREADY_EXISTS", 409);
+
+    // El usuario invitado hereda la company del invitador
+    const invitedUser = await usersModel.create({
+      email,
+      name,
+      surnames,
+      company: inviter.company,
+      pending: true,
+      invitedBy: inviter._id,
+    });
+
+    await sendEmail({
+      to: email,
+      subject: "Invitación para unirse a la compañía",
+      text: `Hola, has sido invitado a unirte a la compañía ${inviter.company.name}. 
+Por favor accede a la aplicación y completa tu registro.`,
+    });
+
+    res.status(201).json({ message: "INVITATION_SENT" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_INVITING_USER");
   }
 };
 
@@ -130,4 +164,5 @@ module.exports = {
   hardDeleteUser,
   restoreUser,
   changePassword,
+  inviteUser,
 };

@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema(
     resetPasswordCode: String,
     resetPasswordExpires: Date,
 
+    pending: { type: Boolean, default: false }, // Usuario pendiente de activar
+    invitedBy: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // Quién lo invitó
+
     role: {
       type: ["admin", "user", "guest"], // Enumerado
       default: "user",

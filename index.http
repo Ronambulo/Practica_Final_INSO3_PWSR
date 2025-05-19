@@ -232,3 +232,15 @@ Authorization: Bearer {{jwt_token}}
 ###
 # Forzar error 500 para probar notificación a Slack
 GET http://localhost:5000/test-error
+
+###
+# Invitar usuario a compañía
+POST http://localhost:5000/users/invite
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "email": "enriquerodriguezdelreal@gmail.com",
+  "name": "invitadoName",
+  "surnames": "invitadoSurname"
+}
