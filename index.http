@@ -1,5 +1,7 @@
-@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2UzZGRiOTFlMjZjNmZjNjlhZTNjNzEiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3NjcxODY5LCJleHAiOjE3NDc3MDc4Njl9.pmtszHwTVeYTJ-WuZ7eeVu5_Z55n46CXDeyt7S-ZRPI
-@client_id = 682b54c507f07f397c244ccb
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODJiNjYwOWE3YTY4MzQ4NGM0NWRhNmMiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3Njc0NjYwLCJleHAiOjE3NDc3MTA2NjB9.Oi_AeoPrr7BTrBMFrPANq_lzehDROUOsn-_aHYIEdGE
+@user_id = 682b6609a7a683484c45da6c
+@client_id = 682b6643a7a683484c45da79
+@project_id = 682b667aa7a683484c45da92
 
 ###
 POST http://localhost:5000/auth/register
@@ -16,7 +18,7 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-    "code": "917744"
+    "code": "567224"
 }
 
 ###
@@ -130,3 +132,68 @@ Authorization: Bearer {{jwt_token}}
 # Restaurar un cliente archivado (poner deleted: false)
 PATCH http://localhost:5000/clients/{{client_id}}/restore
 Authorization: Bearer {{jwt_token}}
+
+###
+# Crear un proyecto asociado a usuario y cliente
+POST http://localhost:5000/projects
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "name": "Obra Y",
+  "projectCode": "Id-proyect",
+  "code": "0002",
+  "clientId": "{{client_id}}",
+  "address": {
+    "street": "Carlos II",
+    "number": 22,
+    "postal": 28936,
+    "city": "Móstoles",
+    "province": "Madrid"
+  },
+  "begin": "07-01-2024",
+  "end": "06-04-2025",
+  "notes": "no acabado"
+}
+
+###
+# Actualizar un proyecto existente
+PUT http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "name": "Obra Y actualizada",
+  "notes": "actualizado"
+}
+
+###
+# Mostrar todos los proyectos del usuario
+GET http://localhost:5000/projects
+Authorization: Bearer {{jwt_token}}
+
+###
+# Obtener un proyecto específico por ID
+GET http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+# Archivar (soft delete) un proyecto
+DELETE http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+# Borrar (hard delete) un proyecto
+DELETE http://localhost:5000/projects/{{project_id}}/hard
+Authorization: Bearer {{jwt_token}}
+
+###
+# Listar proyectos archivados (soft-deleted)
+GET http://localhost:5000/projects/archived
+Authorization: Bearer {{jwt_token}}
+
+###
+# Restaurar un proyecto archivado (soft deleted → activo)
+PATCH http://localhost:5000/projects/{{project_id}}/restore
+Authorization: Bearer {{jwt_token}}
+
