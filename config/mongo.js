@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const db_uri =
+  process.env.NODE_ENV === "test"
+    ? process.env.DB_URI_TEST
+    : process.env.DB_URI;
 
 const dbConnect = () => {
   const db_uri = process.env.DB_URI;

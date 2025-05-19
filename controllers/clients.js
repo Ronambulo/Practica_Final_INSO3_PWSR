@@ -92,7 +92,7 @@ const deleteClient = async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ message: "CLIENT_NOT_FOUND" });
     }
-    res.json(deleted);
+    res.json({ message: "CLIENT_SOFT_DELETED" });
   } catch (error) {
     console.error(error);
     return handleHttpError(res, "ERROR_DELETING_CLIENT", 500);
