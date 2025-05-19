@@ -12,4 +12,12 @@ fs.readdirSync(__dirname).filter((file) => {
   }
 });
 
+// Ruta de prueba para forzar un error 500
+router.get("/test-error", (req, res, next) => {
+  // Crea un error y lánzalo
+  const err = new Error("Esto es un error de prueba 500!");
+  err.status = 500;
+  next(err);
+});
+
 module.exports = router;

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Ronambulo/Practica_Intermedia_INSO3_PWSR#readme",
   "dependencies": {
+    "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -30,6 +31,8 @@
     "mongoose": "^8.12.1",
     "mongoose-delete": "^1.0.2",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.10.0"
+    "nodemailer": "^6.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

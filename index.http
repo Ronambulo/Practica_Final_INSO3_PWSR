@@ -229,3 +229,6 @@ Authorization: Bearer {{jwt_token}}
 PATCH http://localhost:5000/projects/{{project_id}}/restore
 Authorization: Bearer {{jwt_token}}
 
+###
+# Forzar error 500 para probar notificación a Slack
+GET http://localhost:5000/test-error
