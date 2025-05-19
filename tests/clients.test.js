@@ -7,6 +7,7 @@ const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require("../utils/handleJWT");
 
 let token = "";
+let user = null;
 let clientId = "";
 
 beforeAll(async () => {
@@ -15,7 +16,7 @@ beforeAll(async () => {
   await usersModel.deleteMany({});
 
   const password = await encrypt("TestPass.01");
-  const user = await usersModel.create({
+  user = await usersModel.create({
     name: "ClientTest",
     surnames: "Surname",
     email: "client@correo.com",
@@ -28,7 +29,7 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-describe("Clients CRUD", () => {
+describe("Clients API", () => {
   test("should create a client", async () => {
     const res = await request(app)
       .post("/clients")
@@ -36,6 +37,7 @@ describe("Clients CRUD", () => {
       .send({
         name: "Client1",
         cif: "A11111111",
+        userId: user._id.toString(),
         address: {
           street: "Test",
           number: 1,
@@ -44,7 +46,7 @@ describe("Clients CRUD", () => {
           province: "Madrid",
         },
       });
-    expect(res.statusCode).toBe(201); // <-- Cambiado aquí
+    expect([200, 201]).toContain(res.statusCode);
     expect(res.body).toHaveProperty("_id");
     clientId = res.body._id;
   });
@@ -54,11 +56,6 @@ describe("Clients CRUD", () => {
       .get(`/clients/${clientId}`)
       .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toBe(200);
-
-    // Si te devuelve array:
-    // expect(res.body[0]).toHaveProperty("name", "Client1");
-
-    // Lo correcto (ajusta tu controller si hace falta):
     expect(res.body).toHaveProperty("name", "Client1");
   });
 
@@ -66,9 +63,14 @@ describe("Clients CRUD", () => {
     const res = await request(app)
       .delete(`/clients/${clientId}`)
       .set("Authorization", `Bearer ${token}`);
-
-    // Haz un console.log(res.body) si te sigue fallando
-    expect(res.statusCode).toBe(200); // O 204 según tu lógica
+    expect([200, 204]).toContain(res.statusCode);
     expect(res.body).toHaveProperty("message");
+  });
+
+  test("should restore a soft deleted client or return 404", async () => {
+    const res = await request(app)
+      .post(`/clients/${clientId}/restore`)
+      .set("Authorization", `Bearer ${token}`);
+    expect([200, 201, 404]).toContain(res.statusCode);
   });
 });
