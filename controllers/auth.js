@@ -86,4 +86,60 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, verify, login };
+const requestPasswordReset = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await usersModel.findOne({ email });
+    if (!user) return handleHttpError(res, "USER_NOT_FOUND", 404);
+
+    const code = createOTP(); // Por ejemplo, un número de 6 dígitos
+    user.resetPasswordCode = code;
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 minutos
+    await user.save();
+
+    await sendEmail({
+      to: user.email,
+      subject: "Password Reset Code",
+      text: `Your code is: ${code}`,
+    });
+
+    res.json({ message: "RESET_CODE_SENT" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_REQUESTING_PASSWORD_RESET");
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body;
+    const user = await usersModel.findOne({ email });
+
+    if (!user) return handleHttpError(res, "USER_NOT_FOUND", 404);
+    if (
+      !user.resetPasswordCode ||
+      user.resetPasswordCode !== code ||
+      Date.now() > user.resetPasswordExpires
+    ) {
+      return handleHttpError(res, "INVALID_OR_EXPIRED_CODE", 400);
+    }
+
+    user.password = await encrypt(newPassword);
+    user.resetPasswordCode = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ message: "PASSWORD_RESET_OK" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_RESETTING_PASSWORD");
+  }
+};
+
+module.exports = {
+  register,
+  verify,
+  login,
+  requestPasswordReset,
+  resetPassword,
+};

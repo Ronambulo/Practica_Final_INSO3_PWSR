@@ -14,6 +14,9 @@ const UserSchema = new mongoose.Schema(
     verificationAttempts: { type: Number, default: 3 }, // Intentos de verificación
     verified: { type: Boolean, default: false }, // Verificado o no
 
+    resetPasswordCode: String,
+    resetPasswordExpires: Date,
+
     role: {
       type: ["admin", "user", "guest"], // Enumerado
       default: "user",

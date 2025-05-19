@@ -59,6 +59,38 @@ Authorization: Bearer {{jwt_token}}
 }
 
 ###
+PATCH http://localhost:5000/users/password
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "oldPassword": "1234asdf.",
+  "newPassword": "1234asdf"
+}
+
+###
+# Solicitar recuperación de contraseña
+POST http://localhost:5000/auth/recover
+Content-Type: application/json
+
+{
+  "email": "enriquerodridel@gmail.com"
+}
+
+###
+# Resetear contraseña con código recibido por email
+POST http://localhost:5000/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "enriquerodridel@gmail.com",
+  "code": "779363",
+  "newPassword": "1234asdf"
+}
+
+
+
+###
 POST http://localhost:5000/mail
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}

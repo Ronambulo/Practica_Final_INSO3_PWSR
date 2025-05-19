@@ -4,6 +4,7 @@ const { handleHttpError } = require("../utils/handleHttpError");
 const { tokenVerify } = require("../utils/handleJWT");
 const { storageModel } = require("../models/index");
 const uploadToPinata = require("../utils/handleUploadIPFS");
+const { compare, encrypt } = require("../utils/handlePassword");
 
 const updateItem = async (req, res) => {
   try {
@@ -65,6 +66,26 @@ const updateLogo = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await usersModel.findById(userId).select("+password");
+    if (!user) return handleHttpError(res, "USER_NOT_FOUND", 404);
+
+    const isMatch = await compare(oldPassword, user.password);
+    if (!isMatch) return handleHttpError(res, "WRONG_OLD_PASSWORD", 400);
+
+    user.password = await encrypt(newPassword);
+    await user.save();
+    res.json({ message: "PASSWORD_CHANGED" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_CHANGING_PASSWORD");
+  }
+};
+
 // Soft delete (archivar usuario)
 const softDeleteUser = async (req, res) => {
   try {
@@ -108,4 +129,5 @@ module.exports = {
   softDeleteUser,
   hardDeleteUser,
   restoreUser,
+  changePassword,
 };
