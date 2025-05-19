@@ -65,4 +65,47 @@ const updateLogo = async (req, res) => {
   }
 };
 
-module.exports = { updateItem, updateCompany, updateLogo };
+// Soft delete (archivar usuario)
+const softDeleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await UsersModel.delete({ _id: userId });
+    res.json({ message: "USER_SOFT_DELETED" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_SOFT_DELETING_USER");
+  }
+};
+
+// Hard delete (borrado físico)
+const hardDeleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await UsersModel.deleteOne({ _id: userId });
+    res.json({ message: "USER_HARD_DELETED" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_HARD_DELETING_USER");
+  }
+};
+
+// Restaurar usuario archivado
+const restoreUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await UsersModel.restore({ _id: userId });
+    res.json({ message: "USER_RESTORED" });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_RESTORING_USER");
+  }
+};
+
+module.exports = {
+  updateItem,
+  updateCompany,
+  updateLogo,
+  softDeleteUser,
+  hardDeleteUser,
+  restoreUser,
+};

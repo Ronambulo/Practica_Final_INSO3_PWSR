@@ -9,6 +9,9 @@ const {
   updateItem,
   updateCompany,
   updateLogo,
+  softDeleteUser,
+  hardDeleteUser,
+  restoreUser,
 } = require("../controllers/users");
 const { uploadMiddleware } = require("../utils/handleStorage");
 
@@ -20,5 +23,14 @@ router.patch(
   uploadMiddleware.single("image"),
   updateLogo
 );
+
+// Soft delete
+router.delete("/:id", authMiddleware, softDeleteUser);
+
+// Hard delete
+router.delete("/:id/hard", authMiddleware, hardDeleteUser);
+
+// Restaurar usuario archivado
+router.patch("/:id/restore", authMiddleware, restoreUser);
 
 module.exports = router;
