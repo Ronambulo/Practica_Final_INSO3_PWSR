@@ -1,0 +1,13 @@
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODJiNjYwOWE3YTY4MzQ4NGM0NWRhNmMiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3Njc0NjYwLCJleHAiOjE3NDc3MTA2NjB9.Oi_AeoPrr7BTrBMFrPANq_lzehDROUOsn-_aHYIEdGE
+
+###
+POST http://localhost:5000/mail
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "subject": "Test",
+    "text": "Test message",
+    "to": "enriquerodridel@gmail.com",
+    "from": "test@gmail.com"
+}

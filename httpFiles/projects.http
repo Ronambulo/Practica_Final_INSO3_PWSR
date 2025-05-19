@@ -1,0 +1,59 @@
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODJiNjYwOWE3YTY4MzQ4NGM0NWRhNmMiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3Njc0NjYwLCJleHAiOjE3NDc3MTA2NjB9.Oi_AeoPrr7BTrBMFrPANq_lzehDROUOsn-_aHYIEdGE
+@project_id = 682b667aa7a683484c45da92
+@client_id = 682b6643a7a683484c45da79
+
+###
+POST http://localhost:5000/projects
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "name": "Obra Y",
+  "projectCode": "Id-proyect",
+  "code": "0002",
+  "clientId": "{{client_id}}",
+  "address": {
+    "street": "Carlos II",
+    "number": 22,
+    "postal": 28936,
+    "city": "Móstoles",
+    "province": "Madrid"
+  },
+  "begin": "07-01-2024",
+  "end": "06-04-2025",
+  "notes": "no acabado"
+}
+
+###
+PUT http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "name": "Obra Y actualizada",
+  "notes": "actualizado"
+}
+
+###
+GET http://localhost:5000/projects
+Authorization: Bearer {{jwt_token}}
+
+###
+GET http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+DELETE http://localhost:5000/projects/{{project_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+DELETE http://localhost:5000/projects/{{project_id}}/hard
+Authorization: Bearer {{jwt_token}}
+
+###
+GET http://localhost:5000/projects/archived
+Authorization: Bearer {{jwt_token}}
+
+###
+PATCH http://localhost:5000/projects/{{project_id}}/restore
+Authorization: Bearer {{jwt_token}}

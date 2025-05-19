@@ -1,0 +1,95 @@
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODJiNjYwOWE3YTY4MzQ4NGM0NWRhNmMiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3Njc0NjYwLCJleHAiOjE3NDc3MTA2NjB9.Oi_AeoPrr7BTrBMFrPANq_lzehDROUOsn-_aHYIEdGE
+
+###
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "email": "enriquerodridel@gmail.com",
+    "password": "1234asdf"
+}
+
+###
+PUT http://localhost:5000/auth/verify
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "code": "567224"
+}
+
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "enriquerodridel@gmail.com",
+    "password": "1234asdf"
+}
+
+###
+PATCH http://localhost:5000/users
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "name": "test3",
+    "surnames": "test3Surname",
+    "nif": "12345678Z"
+}
+
+###
+PATCH http://localhost:5000/users/company
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "company": {
+    "name": "Servitop, SL.",
+    "cif": "BXXXXXXXX",
+    "street": "Carlos V",
+    "number": 22,
+    "postal": 28936,
+    "city": "Móstoles",
+    "province": "Madrid"
+  }
+}
+
+###
+PATCH http://localhost:5000/users/password
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "oldPassword": "1234asdf.",
+  "newPassword": "1234asdf"
+}
+
+###
+POST http://localhost:5000/auth/recover
+Content-Type: application/json
+
+{
+  "email": "enriquerodridel@gmail.com"
+}
+
+###
+POST http://localhost:5000/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "enriquerodridel@gmail.com",
+  "code": "779363",
+  "newPassword": "1234asdf"
+}
+
+###
+POST http://localhost:5000/users/invite
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "email": "enriquerodriguezdelreal@gmail.com",
+  "name": "invitadoName",
+  "surnames": "invitadoSurname"
+}

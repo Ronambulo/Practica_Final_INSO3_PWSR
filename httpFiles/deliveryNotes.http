@@ -1,0 +1,61 @@
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODJiNjYwOWE3YTY4MzQ4NGM0NWRhNmMiLCJyb2xlIjpbInVzZXIiXSwiaWF0IjoxNzQ3Njc0NjYwLCJleHAiOjE3NDc3MTA2NjB9.Oi_AeoPrr7BTrBMFrPANq_lzehDROUOsn-_aHYIEdGE
+@user_id = 682b6609a7a683484c45da6c
+@client_id = 682b6643a7a683484c45da79
+@project_id = 682b667aa7a683484c45da92
+@deliverynote_id = 682b82c4c04b5e30df5cefb9
+
+###
+POST http://localhost:5000/deliverynotes
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "userId": "{{user_id}}",
+  "clientId": "{{client_id}}",
+  "projectId": "{{project_id}}",
+  "format": "hours",
+  "hours": 7,
+  "description": "my description",
+  "sign": "/path/to/sign3",
+  "pending": true
+}
+
+###
+GET http://localhost:5000/deliverynotes
+Authorization: Bearer {{jwt_token}}
+
+###
+GET http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+PUT http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "format": "hours",
+  "hours": 10,
+  "description": "Actualización de descripción",
+  "pending": false
+}
+
+###
+DELETE http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+DELETE http://localhost:5000/deliverynotes/{{deliverynote_id}}/hard
+Authorization: Bearer {{jwt_token}}
+
+###
+GET http://localhost:5000/deliverynotes/archived
+Authorization: Bearer {{jwt_token}}
+
+###
+PATCH http://localhost:5000/deliverynotes/{{deliverynote_id}}/restore
+Authorization: Bearer {{jwt_token}}
+
+###
+GET http://localhost:5000/deliverynotes/pdf/{{deliverynote_id}}
+Authorization: Bearer {{jwt_token}}

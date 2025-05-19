@@ -1,6 +1,9 @@
 const { matchedData } = require("express-validator");
 const deliveryNoteModel = require("../models/deliveryNote");
 const { handleHttpError } = require("../utils/handleHttpError");
+const PDFDocument = require("pdfkit");
+const path = require("path");
+const fs = require("fs");
 
 // Crear albarán
 const createDeliveryNote = async (req, res) => {
@@ -122,6 +125,62 @@ const restoreDeliveryNote = async (req, res) => {
   }
 };
 
+const getDeliveryNotePDF = async (req, res) => {
+  try {
+    const note = await deliveryNoteModel
+      .findById(req.params.id)
+      .populate("userId", "name surnames email")
+      .populate("clientId", "name cif")
+      .populate("projectId", "name projectCode");
+    if (!note) return handleHttpError(res, "DELIVERY_NOTE_NOT_FOUND", 404);
+
+    // Crea PDF en memoria
+    const doc = new PDFDocument();
+    let chunks = [];
+    doc.on("data", (chunk) => chunks.push(chunk));
+    doc.on("end", () => {
+      const pdfBuffer = Buffer.concat(chunks);
+      res.set({
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="albaran_${note._id}.pdf"`,
+      });
+      res.send(pdfBuffer);
+    });
+
+    // Contenido básico del albarán
+    doc.fontSize(20).text("Albarán", { align: "center" });
+    doc.moveDown();
+    doc.fontSize(14).text(`ID: ${note._id}`);
+    doc.text(`Fecha: ${note.createdAt.toLocaleDateString()}`);
+    doc.moveDown();
+    doc
+      .fontSize(14)
+      .text(`Cliente: ${note.clientId.name} (${note.clientId.cif})`);
+    doc.text(
+      `Proyecto: ${note.projectId.name} (${note.projectId.projectCode})`
+    );
+    doc.moveDown();
+    doc.text(
+      `Usuario: ${note.userId.name} ${note.userId.surnames} (${note.userId.email})`
+    );
+    doc.moveDown();
+    doc.text(`Formato: ${note.format}`);
+    if (note.format === "hours") {
+      doc.text(`Horas: ${note.hours}`);
+    }
+    doc.moveDown();
+    doc.text(`Descripción: ${note.description || ""}`);
+    doc.moveDown();
+    doc.text(`Firmado: ${note.pending ? "No" : "Sí"}`);
+    // Puedes poner más info o personalizar el formato aquí
+
+    doc.end();
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_GENERATING_PDF");
+  }
+};
+
 module.exports = {
   createDeliveryNote,
   getDeliveryNotes,
@@ -131,4 +190,5 @@ module.exports = {
   hardDeleteDeliveryNote,
   getArchivedDeliveryNotes,
   restoreDeliveryNote,
+  getDeliveryNotePDF,
 };

@@ -14,6 +14,7 @@ const {
   hardDeleteDeliveryNote,
   getArchivedDeliveryNotes,
   restoreDeliveryNote,
+  getDeliveryNotePDF,
 } = require("../controllers/deliveryNotes");
 
 /**
@@ -269,5 +270,35 @@ router.delete("/:id/hard", authMiddleware, hardDeleteDeliveryNote);
  *         description: Albarán no encontrado
  */
 router.patch("/:id/restore", authMiddleware, restoreDeliveryNote);
+
+/**
+ * @swagger
+ * /deliverynotes/pdf/{id}:
+ *   get:
+ *     summary: Descarga el PDF del albarán
+ *     tags: [Albaranes]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del albarán
+ *     responses:
+ *       200:
+ *         description: PDF generado correctamente
+ *         content:
+ *           application/pdf:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Albarán no encontrado
+ */
+router.get("/pdf/:id", authMiddleware, getDeliveryNotePDF);
 
 module.exports = router;

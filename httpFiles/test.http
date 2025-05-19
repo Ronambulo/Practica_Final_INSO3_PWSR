@@ -1,0 +1,3 @@
+###
+# Forzar error 500 para probar notificación a Slack
+GET http://localhost:5000/test-error
