@@ -2,6 +2,7 @@
 @user_id = 682b6609a7a683484c45da6c
 @client_id = 682b6643a7a683484c45da79
 @project_id = 682b667aa7a683484c45da92
+@deliverynote_id = 682b82c4c04b5e30df5cefb9
 
 ###
 POST http://localhost:5000/auth/register
@@ -244,3 +245,63 @@ Authorization: Bearer {{jwt_token}}
   "name": "invitadoName",
   "surnames": "invitadoSurname"
 }
+
+###
+# Crear un albarán
+POST http://localhost:5000/deliverynotes
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "userId": "{{user_id}}",
+  "clientId": "{{client_id}}",
+  "projectId": "{{project_id}}",
+  "format": "hours",
+  "hours": 7,
+  "description": "my description",
+  "sign": "/path/to/sign3",
+  "pending": true
+}
+
+###
+# Listar todos los albaranes
+GET http://localhost:5000/deliverynotes
+Authorization: Bearer {{jwt_token}}
+
+###
+# Obtener un albarán por ID
+GET http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+# Actualizar un albarán (PUT)
+PUT http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "format": "hours",
+  "hours": 10,
+  "description": "Actualización de descripción",
+  "pending": false
+}
+
+###
+# Archivar (soft delete) un albarán
+DELETE http://localhost:5000/deliverynotes/{{deliverynote_id}}
+Authorization: Bearer {{jwt_token}}
+
+###
+# Hard delete (borrado físico) de un albarán
+DELETE http://localhost:5000/deliverynotes/{{deliverynote_id}}/hard
+Authorization: Bearer {{jwt_token}}
+
+###
+# Listar albaranes archivados
+GET http://localhost:5000/deliverynotes/archived
+Authorization: Bearer {{jwt_token}}
+
+###
+# Restaurar un albarán archivado
+PATCH http://localhost:5000/deliverynotes/{{deliverynote_id}}/restore
+Authorization: Bearer {{jwt_token}}
