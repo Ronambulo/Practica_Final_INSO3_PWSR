@@ -301,4 +301,46 @@ router.patch("/:id/restore", authMiddleware, restoreDeliveryNote);
  */
 router.get("/pdf/:id", authMiddleware, getDeliveryNotePDF);
 
+const { uploadMiddleware } = require("../utils/handleStorage"); // o tu propio middleware
+
+/**
+ * @swagger
+ * /deliverynotes/{id}/sign:
+ *   post:
+ *     summary: Sube la imagen de la firma de un albarán
+ *     tags: [Albaranes]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del albarán
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Firma subida correctamente
+ *       400:
+ *         description: Error al subir la firma
+ *       404:
+ *         description: Albarán no encontrado
+ */
+router.post(
+  "/:id/sign",
+  authMiddleware,
+  uploadMiddleware.single("image"),
+  require("../controllers/deliveryNotes").uploadSignature
+);
+
 module.exports = router;

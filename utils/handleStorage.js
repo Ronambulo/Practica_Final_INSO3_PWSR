@@ -12,12 +12,12 @@ const storage = multer.diskStorage({
   },
 });
 
-const maxSize = 20000; //20kb
+const maxSize = 2 * 1024 * 1024; //3kb
 
 const uploadMiddleware = multer({
   storage,
   limits: { fileSize: maxSize },
-}); //en bytes 1024 * 1 = 1kb
+});
 const memory = multer.memoryStorage();
 const uploadMiddlewareMemory = multer({
   storage: memory,

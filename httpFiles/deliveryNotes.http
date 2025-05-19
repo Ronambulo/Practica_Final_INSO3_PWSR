@@ -59,3 +59,17 @@ Authorization: Bearer {{jwt_token}}
 ###
 GET http://localhost:5000/deliverynotes/pdf/{{deliverynote_id}}
 Authorization: Bearer {{jwt_token}}
+
+###
+POST http://localhost:5000/deliverynotes/{{deliverynote_id}}/sign HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary123
+Authorization: Bearer {{jwt_token}}
+
+--boundary123
+Content-Disposition: form-data; name="image"; filename="sign.jpg"
+Content-Type: image/jpeg
+
+< ./sign.jpg
+--boundary123--
+
+###

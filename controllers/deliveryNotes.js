@@ -2,8 +2,8 @@ const { matchedData } = require("express-validator");
 const deliveryNoteModel = require("../models/deliveryNote");
 const { handleHttpError } = require("../utils/handleHttpError");
 const PDFDocument = require("pdfkit");
-const path = require("path");
-const fs = require("fs");
+const uploadToPinata = require("../utils/handleUploadIPFS"); // o tu función cloud
+const { generatePDFBuffer } = require("../utils/generatePDF");
 
 // Crear albarán
 const createDeliveryNote = async (req, res) => {
@@ -172,12 +172,58 @@ const getDeliveryNotePDF = async (req, res) => {
     doc.text(`Descripción: ${note.description || ""}`);
     doc.moveDown();
     doc.text(`Firmado: ${note.pending ? "No" : "Sí"}`);
-    // Puedes poner más info o personalizar el formato aquí
 
     doc.end();
   } catch (err) {
     console.error(err);
     handleHttpError(res, "ERROR_GENERATING_PDF");
+  }
+};
+
+const uploadSignature = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!req.file) return handleHttpError(res, "NO_IMAGE_UPLOADED", 400);
+
+    // 1. Subir firma a IPFS
+    const pinataResponse = await uploadToPinata(
+      req.file.buffer,
+      req.file.originalname
+    );
+    const ipfsUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${pinataResponse.IpfsHash}`;
+
+    // 2. Actualizar el albarán con la firma y marcar como firmado
+    const note = await deliveryNoteModel
+      .findByIdAndUpdate(id, { sign: ipfsUrl, pending: false }, { new: true })
+      .populate("userId", "name surnames")
+      .populate("clientId", "name")
+      .populate("projectId", "name");
+
+    if (!note) return handleHttpError(res, "DELIVERY_NOTE_NOT_FOUND", 404);
+
+    // 3. Generar el PDF con el albarán firmado
+    const pdfBuffer = await generatePDFBuffer(note);
+
+    // 4. Subir el PDF a IPFS
+    const pdfPinata = await uploadToPinata(
+      pdfBuffer,
+      `albaran_${note._id}.pdf`
+    );
+    const pdfUrl = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${pdfPinata.IpfsHash}`;
+
+    // 5. Guardar la URL del PDF en el albarán
+    note.pdfUrl = pdfUrl;
+    await note.save();
+
+    res.json({
+      message: "SIGNATURE_UPLOADED_AND_PDF_SAVED",
+      sign: ipfsUrl,
+      pdf: pdfUrl,
+      note,
+    });
+  } catch (err) {
+    console.error(err);
+    handleHttpError(res, "ERROR_UPLOADING_SIGNATURE_OR_PDF");
   }
 };
 
@@ -191,4 +237,5 @@ module.exports = {
   getArchivedDeliveryNotes,
   restoreDeliveryNote,
   getDeliveryNotePDF,
+  uploadSignature,
 };
