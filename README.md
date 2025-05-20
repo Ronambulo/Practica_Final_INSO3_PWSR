@@ -35,7 +35,24 @@ Debes crear un archivo `.env` con las variables de entorno necesarias, como la c
 **Ejemplo (`.env`):**
 
 ```
-TODO
+PORT=5000
+NODE_ENV='production'
+DB_URI=
+DB_URI_TEST=
+PUBLIC_URL='http://localhost:5000'
+PINATA_GATEWAY_URL=
+PINATA_KEY=
+PINATA_SECRET=
+PINATA_JWT=
+JWT_SECRET=
+
+EMAIL=
+REFRESH_TOKEN=
+CLIENT_SECRET=
+CLIENT_ID=
+REDIRECT_URI=
+
+SLACK_WEBHOOK_URL=
 ```
 
 🔒 **No compartas este archivo ni lo subas al repositorio.**
